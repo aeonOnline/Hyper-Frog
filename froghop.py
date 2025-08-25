@@ -441,7 +441,7 @@ def process_all_users():
 
 if __name__ == "__main__":
     # For testing with one user_id
-    test_user_id = "1025971630"  # Replace with actual user_id for testing
+    test_user_id = ""  # Replace with actual user_id for testing
     execute_flag = False  # Set to True to execute actions during testing; False to only compute and print/store decisions
     conn = sqlite3.connect('wallets.db')
     c = conn.cursor()
