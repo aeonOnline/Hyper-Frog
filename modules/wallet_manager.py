@@ -229,5 +229,5 @@ if __name__ == "__main__":
     # print(f"Solana Address: {sol_address}")
     # settings = wallet_manager.get_user_settings(user_id)
     # print(f"Settings: Slippage={settings[0]}%, Hype Yield={settings[1]}, Stables Yield={settings[2]}")
-    print(wallet_manager.get_evm_wallet(1025971630))
+    print(wallet_manager.get_evm_wallet())
     db.close()
