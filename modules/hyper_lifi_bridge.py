@@ -135,7 +135,10 @@ def send_lifi_tx_solana(solana_private_key: str, lifi_response: Dict[str, Any], 
     try:
         signed_vtx = VersionedTransaction(new_msg, [keypair])
         txid = client.send_raw_transaction(bytes(signed_vtx))
-        return {"tx_hash": str(txid)}
+        try:
+            return {"tx_hash": str(txid.value)}
+        except:
+            return {"tx_hash": str(txid)}
     except Exception as e:
         return _err(11, "TX_SEND_FAILED", f"Failed to sign/send LiFi Solana transaction: {e}")
 
