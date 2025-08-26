@@ -6,9 +6,12 @@ import json
 # Load environment variables
 load_dotenv()
 GLUEX_API_KEY = os.getenv('GLUEX_API_KEY')
+GLUEX_PID = os.getenv('GLUEX_PID')
 RPC_URL = 'https://rpc.hyperliquid.xyz/evm'
 
 if not GLUEX_API_KEY:
+    raise RuntimeError("GLUEX_API_KEY not set in .env")
+if not GLUEX_PID:
     raise RuntimeError("GLUEX_API_KEY not set in .env")
 if not RPC_URL:
     raise RuntimeError("RPC_URL not set in .env")
@@ -34,7 +37,7 @@ def get_swap_quote(input_token: str, output_token: str, input_amount: str, user_
         'userAddress': user_address,
         'outputReceiver':user_address,
         'chainID': 'hyperevm',
-        'uniquePID': '083b7cd68478935999b08b1bf9d7ea3a77e5d5de6072e209ec872574b372ed6b',
+        'uniquePID': GLUEX_PID,
         "isPermit2":    False
     }
     try:
@@ -67,7 +70,7 @@ def execute_swap(quote_result: dict, user_address: str, private_key: str) -> dic
                 approve_tx = token_contract.functions.approve(router, amount_in).build_transaction({
                     'chainId': 999,
                     'from': user_address,
-                    'nonce': w3.eth.get_transaction_count(user_address),
+                    'nonce': w3.eth.get_transaction_count(user_address,"pending"),
                     'gasPrice': w3.eth.gas_price
                 })
                 approve_tx['gas'] = w3.eth.estimate_gas(approve_tx)
